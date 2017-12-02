@@ -15,7 +15,6 @@ HEX_LIST = ['A', 'B', 'C', 'D', 'E', 'F',
 MAXINT = 2147483647
 
 # Token types
-
 INTEGER       = 'INTEGER'
 REAL          = 'REAL'
 INTEGER_CONST = 'INTEGER_CONST'
@@ -334,6 +333,29 @@ class Lexer(object):
 
 		return result
 
+	"""String Analysis"""
+	def handle_string(self):
+		current_pos = self.pos
+		result = ""
+		self.advance() # Skip the first '"'
+
+		while True:
+			if self.current_char is not None and self.current_char != '\\' and self.current_char != '"':
+				result += self.current_char
+				self.advance()
+			elif self.current_char == '\\':
+				self.advance() # Skip current '\'
+				result += self.current_char # Add the current char, including '\' and '"'
+				self.advance()
+			elif self.current_char == '"':
+				self.advance()
+				break
+			else:
+				self.error()
+
+		tocken = Token('STRING', result)
+		return tocken
+
 	"""Lexer: Acquiring Tokens"""
 
 	def get_next_token(self):
@@ -424,6 +446,11 @@ class Lexer(object):
 				self.skip_comment()
 				continue
 
+			# Lexial Analysis of Strings
+			# Hint: after the analysis of comments
+			if self.current_char == '"':
+				return self.handle_string()
+
 			if self.current_char == ':':
 				self.advance()
 				return Token(COLON, ':')
@@ -431,10 +458,6 @@ class Lexer(object):
 			if self.current_char == ',':
 				self.advance()
 				return Token(COMMA, ',')
-
-			# lexial analysis of strings
-			if self.current_char == '"':
-				pass
 
 			self.error()
 
