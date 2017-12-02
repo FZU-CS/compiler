@@ -14,7 +14,7 @@ def main():
 		if current_token.type == 'EOF':
 			break
 		current_token = lexer.get_next_token()
-		print current_token
+		print current_token, '\n'
 
 if __name__ == '__main__':
 	main()

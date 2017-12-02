@@ -11,6 +11,8 @@ from collections import OrderedDict
 HEX_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 
 			'a', 'b', 'c', 'd', 'e', 'f']
 
+MAXINT = 2147483647
+
 # Token types
 
 INTEGER       = 'INTEGER'
@@ -65,10 +67,13 @@ RESERVED_KEYWORDS = {
 }
 
 class Lexer(object):
+	"""A Lexer for Pascal Language"""
 	def __init__(self,text):
 		self.text = text
 		self.pos = 0
 		self.current_char = self.text[self.pos]
+
+	"""Exception Handling"""
 
 	def error(self):
 		raise Exception('Invalid character')
@@ -84,6 +89,18 @@ class Lexer(object):
 	def hex_error(self):
 		"""Instead of raising error, we choose to print the hex error"""
 		print "Hex Number Error"
+
+	def number_error(self):
+		"""Get a number with errors"""
+		print "Number Organization Error"
+		while self.current_char is not None and self.current_char != ";":
+			self.advance()
+
+	def print_blank_info(self):
+		"""Print Something as Error Occurrs"""
+		print "WARNING: Cannot acquire Token because of lexer error!\n"
+
+	"""Basic Functions"""
 
 	def advance(self):
 		"""Move to Next Char Location"""
@@ -123,6 +140,27 @@ class Lexer(object):
 			self.advance()
 		# print "skip_whitespace\n"
 
+	def peek(self):
+		"""Another Look Ahead Function"""
+		peek_pos = self.pos + 1
+		if peek_pos > len(self.text) - 1:
+			return None
+		else:
+			return self.text[peek_pos]
+
+	def _id(self):
+		"""Handle Identifiers and Reserved Keywords"""
+		result = ''
+
+		while self.current_char is not None and (self.current_char.isalnum() or self.current_char == '_'):
+			result += self.current_char
+			self.advance()
+
+		token = RESERVED_KEYWORDS.get(result, Token(ID, result))
+		return token
+
+	"""Handling Numbers"""
+
 	def dec_number(self):
 		"""Acquire Normal Number"""
 		result = ''
@@ -141,6 +179,8 @@ class Lexer(object):
 			token = Token('REAL_CONST', float(result))
 
 		else:
+			if int(result) > MAXINT:
+				print "Error: The integer is exceeded!"
 			token = Token('INTEGER_CONST', int(result))
 		
 		print "Get a dec_number", result
@@ -252,28 +292,7 @@ class Lexer(object):
 		return self.hex_error()
 		#return token
 
-	def number_error(self):
-		print "Number Organization Error"
-		while self.current_char is not None and self.current_char != ";":
-			self.advance()
-
-	def peek(self):
-		peek_pos = self.pos + 1
-		if peek_pos > len(self.text) - 1:
-			return None
-		else:
-			return self.text[peek_pos]
-
-	def _id(self):
-		"""Handle Identifiers and Reserved Keywords"""
-		result = ''
-
-		while self.current_char is not None and (self.current_char.isalnum() or self.current_char == '_'):
-			result += self.current_char
-			self.advance()
-
-		token = RESERVED_KEYWORDS.get(result, Token(ID, result))
-		return token
+	"""Number Type Judger"""
 
 	def judge_type(self, start_pos):
 		"""Return type flag in terms of an integer
@@ -311,6 +330,8 @@ class Lexer(object):
 			current_pos += 1
 
 		return result
+
+	"""Lexer: Acquiring Tokens"""
 
 	def get_next_token(self):
 		"""Lexical analyzer (also known as scanner or tokenizer)
@@ -354,6 +375,9 @@ class Lexer(object):
 							self.number_error()
 					else:
 						self.oct_number()
+						
+				# Cannot return Token, print blank information
+				self.print_blank_info()
 
 			if self.current_char == ':' and self.peek() == '=':
 				self.advance()
