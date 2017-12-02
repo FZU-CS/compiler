@@ -11,6 +11,7 @@ from collections import OrderedDict
 HEX_LIST = ['A', 'B', 'C', 'D', 'E', 'F', 
 			'a', 'b', 'c', 'd', 'e', 'f']
 
+# Max int number 
 MAXINT = 2147483647
 
 # Token types
@@ -40,6 +41,8 @@ COMMA         = 'COMMA'
 # there is no more input left for lexical analysis
 EOF           = 'EOF'
 PROCEDURE	  = 'PROCEDURE'
+# String is an additional required tocken
+STRING        = 'STRING'
 
 class Token(object):
 	def __init__(self, type, value):
@@ -375,7 +378,7 @@ class Lexer(object):
 							self.number_error()
 					else:
 						self.oct_number()
-						
+
 				# Cannot return Token, print blank information
 				self.print_blank_info()
 
@@ -428,6 +431,10 @@ class Lexer(object):
 			if self.current_char == ',':
 				self.advance()
 				return Token(COMMA, ',')
+
+			# lexial analysis of strings
+			if self.current_char == '"':
+				pass
 
 			self.error()
 
