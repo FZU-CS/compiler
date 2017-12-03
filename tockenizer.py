@@ -46,8 +46,20 @@ STRING        = 'STRING'
 LANGBRA       = 'LANGBRA'
 # > 
 RANGBRA       = 'RANGBRA'
+# [
+LSQUBRA       = 'LSQUBRA'
+# ]
+RSQUBRA       = 'RSQUBRA'
 # =
 EQUAL         = 'EQUAL'
+# @, at sign
+AT_SIGN       = 'AT_SIGN'
+# #, number sign
+NUMBER_SIGN   = 'NUMBER_SIGN'
+# $, dollar sign
+DOLLAR_SIGN   = 'DOLLAR_SIGN'
+# ^
+TOPANGBRA     = 'TOPANGBRA'
 
 class Token(object):
 	def __init__(self, type, value):
@@ -377,7 +389,7 @@ class Lexer(object):
 				continue
 
 			# Character
-			if self.current_char.isalpha():
+			if self.current_char.isalpha() or self.current_char == '_':
 				return self._id()
 
 			# Handling Number
@@ -486,6 +498,30 @@ class Lexer(object):
 			if self.current_char == '>':
 				self.advance()
 				return Token(RANGBRA, '>')
+
+			if self.current_char == '[':
+				self.advance()
+				return Token(LSQUBRA, '[')
+
+			if self.current_char == ']':
+				self.advance()
+				return Token(RSQUBRA, ']')
+
+			if self.current_char == '@':
+				self.advance()
+				return Token(AT_SIGN, '@')
+
+			if self.current_char == '#':
+				self.advance()
+				return Token(NUMBER_SIGN, '#')
+
+			if self.current_char == '$':
+				self.advance()
+				return Token(DOLLAR_SIGN, '$')
+
+			if self.current_char == '^':
+				self.advance()
+				return Token(TOPANGBRA, '^')
 
 			self.error()
 
