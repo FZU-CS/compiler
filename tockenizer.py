@@ -42,6 +42,12 @@ EOF           = 'EOF'
 PROCEDURE	  = 'PROCEDURE'
 # String is an additional required tocken
 STRING        = 'STRING'
+# <
+LANGBRA       = 'LANGBRA'
+# > 
+RANGBRA       = 'RANGBRA'
+# =
+EQUAL         = 'EQUAL'
 
 class Token(object):
 	def __init__(self, type, value):
@@ -334,20 +340,20 @@ class Lexer(object):
 		return result
 
 	"""String Analysis"""
-	def handle_string(self):
+	def handle_string(self, end_of_string):
 		current_pos = self.pos
 		result = ""
-		self.advance() # Skip the first '"'
+		self.advance() # Skip the first " or '
 
 		while True:
-			if self.current_char is not None and self.current_char != '\\' and self.current_char != '"':
+			if self.current_char is not None and self.current_char != '\\' and self.current_char != end_of_string:
 				result += self.current_char
 				self.advance()
 			elif self.current_char == '\\':
 				self.advance() # Skip current '\'
 				result += self.current_char # Add the current char, including '\' and '"'
 				self.advance()
-			elif self.current_char == '"':
+			elif self.current_char == end_of_string:
 				self.advance()
 				break
 			else:
@@ -399,8 +405,13 @@ class Lexer(object):
 						else: # if the number is wrong, report error
 							self.number_error()
 					else:
-						self.oct_number()
-
+						if next_char.isdigit():
+							self.oct_number()
+						elif next_char.isspace(): # single 0
+							self.advance()
+							return Token(INTEGER_CONST, 0)
+						else:
+							self.number_error()
 				# Cannot return Token, print blank information
 				self.print_blank_info()
 
@@ -408,6 +419,10 @@ class Lexer(object):
 				self.advance()
 				self.advance()
 				return Token(ASSIGN, ':=')
+
+			if self.current_char == '=':
+				self.advance()
+				return Token(EQUAL, '=')
 
 			if self.current_char == ';':
 				self.advance()
@@ -449,7 +464,12 @@ class Lexer(object):
 			# Lexial Analysis of Strings
 			# Hint: after the analysis of comments
 			if self.current_char == '"':
-				return self.handle_string()
+				end_of_string = '"'
+				return self.handle_string(end_of_string)
+
+			if self.current_char == '\'':
+				end_of_string = '\''
+				return self.handle_string(end_of_string)
 
 			if self.current_char == ':':
 				self.advance()
@@ -458,6 +478,14 @@ class Lexer(object):
 			if self.current_char == ',':
 				self.advance()
 				return Token(COMMA, ',')
+
+			if self.current_char == '<':
+				self.advance()
+				return Token(LANGBRA, '<')
+
+			if self.current_char == '>':
+				self.advance()
+				return Token(RANGBRA, '>')
 
 			self.error()
 
