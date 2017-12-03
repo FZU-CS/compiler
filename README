@@ -1,0 +1,21 @@
+This repository maintains the coding tasks of "Compiler Principles", FZU, 2017 Fall. 
+
+Introduction: 
+  The basic of this repository is a compiler for Pascal language. We make some efforts on accommodating to the additional requirements of this experiment, including:
+
+Lexer: 
+  * 1.Analysing specific integer number, such as Oct, Bin, Hex.
+  * 2.Warning if an integer is bigger than 2^31;
+  * 3.Analysing type "string".
+
+Grammatical Analysis: TBD
+
+IR Generating: TBD
+
+Any issues: 
+  * wasdnsxchen@gmail.com
+
+References:
+  * [1]Wikipedia: https://en.wikipedia.org/wiki/Pascal_%28programming_language%29
+  * [2]Pascal-Interpreter: https://github.com/kevallakhani95/Pascal-Interpreter/
+  * [3]P4-HLIR: https://github.com/p4lang/p4-hlir
