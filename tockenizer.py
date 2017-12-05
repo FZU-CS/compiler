@@ -92,6 +92,7 @@ class Lexer(object):
 		self.text = text
 		self.pos = 0
 		self.current_char = self.text[self.pos]
+		self.current_line = 1
 
 	"""Exception Handling"""
 
@@ -148,11 +149,23 @@ class Lexer(object):
 			return self.text[pos]
 	
 	def skip_comment(self):
-		"""Skip Pascal Comments"""
+		"""Skip "{}" Pascal Comments"""
 		while self.current_char != '}':
 			self.advance()
 		self.advance() # Skips until the closing curly brace
 		# print "skip_comment\n"
+
+	def skip_another_comment(self):
+		"""Skip "//" Pascal Comments"""
+		# Go to the next line
+		self.go_newline()
+		self.current_line += 1
+
+	def go_newline(self):
+		"""Go to the next line"""
+		while self.current_char != '\n' and self.current_char != '\r':
+			self.advance()
+		self.advance()
 
 	def skip_whitespace(self):
 		"""Skip White Spaces"""
@@ -382,7 +395,20 @@ class Lexer(object):
         apart into tokens. One token at a time.
         """
 		while self.current_char is not None:
-			
+
+			# New line
+			if ord(self.current_char) == ord('\n'):
+				self.go_newline()
+
+			# For ignoring "//" comments, skip them when lexer analysing
+			if self.current_char == '/':
+				# if meet comments, skip
+				if self.look_ahead(self.pos) == '/':
+					self.skip_another_comment()
+				else:
+					self.advance()
+					return Token(FLOAT_DIV, '/')
+
 			# White Space
 			if self.current_char.isspace():
 				self.skip_whitespace()
@@ -451,10 +477,6 @@ class Lexer(object):
 			if self.current_char == '*':
 				self.advance()
 				return Token(MUL, '*')
-
-			if self.current_char == '/':
-				self.advance()
-				return Token(FLOAT_DIV, '/')
 
 			if self.current_char == '(':
 				self.advance()
