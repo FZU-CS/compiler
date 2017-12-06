@@ -22,6 +22,7 @@ def main():
 	current_token = lexer.get_next_token()
 	while current_token is not None:
 		if current_token.type == 'EOF':
+			#print lexer.current_line
 			break
 		current_token = lexer.get_next_token()
 		print current_token, '\n'

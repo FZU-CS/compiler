@@ -163,6 +163,8 @@ class Lexer(object):
 	def skip_comment(self):
 		"""Skip "{}" Pascal Comments"""
 		while self.current_char != '}':
+			if ord(self.current_char) == ord('\n'):
+				self.current_line += 1
 			self.advance()
 		self.advance() # Skips until the closing curly brace
 
@@ -170,12 +172,14 @@ class Lexer(object):
 		"""Skip "//" Pascal Comments"""
 		# Go to the next line
 		self.go_newline()
-		self.current_line += 1
 
 	def go_newline(self):
 		"""Go to the next line"""
 		while self.current_char != '\n' and self.current_char != '\r':
+			if self.pos > len(self.text)-1:
+				break
 			self.advance()
+		self.current_line += 1
 
 	def skip_whitespace(self):
 		"""Skip White Spaces"""
@@ -415,6 +419,9 @@ class Lexer(object):
 				else:
 					self.advance()
 					return Token(FLOAT_DIV, '/')
+
+				if self.current_char == None:
+					break
 
 			# White Space
 			if self.current_char.isspace():
