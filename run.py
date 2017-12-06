@@ -16,7 +16,7 @@ from collections import OrderedDict
 from tockenizer import Lexer
 
 def main():
-	text = open(sys.argv[1], 'r').read()
+	text = open(sys.argv[1], 'rU').read()
 	lexer = Lexer(text)
 
 	current_token = lexer.get_next_token()

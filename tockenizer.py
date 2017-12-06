@@ -60,6 +60,7 @@ NUMBER_SIGN   = 'NUMBER_SIGN'
 DOLLAR_SIGN   = 'DOLLAR_SIGN'
 # ^
 TOPANGBRA     = 'TOPANGBRA'
+SUB           = 'SUB'
 
 class Token(object):
 	def __init__(self, type, value):
@@ -76,6 +77,7 @@ class Token(object):
 		return self.__str__()
 
 RESERVED_KEYWORDS = {
+	'SUB': Token('SUB', 'SUB'),
 	'PROGRAM': Token('PROGRAM', 'PROGRAM'),
 	'VAR': Token('VAR', 'VAR'),
 	'DIV': Token('INTEGER_DIV', 'DIV'),
@@ -97,23 +99,23 @@ class Lexer(object):
 	"""Exception Handling"""
 
 	def error(self):
-		raise Exception('Invalid character')
+		raise Exception('Invalid character, at line %d' % self.current_line)
 
 	def bin_error(self):
 		"""Instead of raising error, we choose to print the bin error"""
-		print "Bin Number Error"
+		print "Error: line%d, Bin Number Error" % self.current_line
 
 	def oct_error(self):
 		"""Instead of raising error, we choose to print the oct error"""
-		print "Oct Number Error"
+		print "Error: line%d, Oct Number Error" % self.current_line
 
 	def hex_error(self):
 		"""Instead of raising error, we choose to print the hex error"""
-		print "Hex Number Error"
+		print "Error: line%d, Hex Number Error" % self.current_line
 
 	def number_error(self):
 		"""Get a number with errors"""
-		print "Number Organization Error"
+		print "Error: line%d, Number Organization Error" % self.current_line
 		while self.current_char is not None and self.current_char != ";":
 			self.advance()
 
@@ -136,10 +138,20 @@ class Lexer(object):
 		next_char = None
 		next_pos = pos+1
 		if next_pos > len(self.text)-1:
-			return next_char
+			return None
 		else:
 			next_char = self.text[next_pos]
 			return next_char
+
+	def look_back(self, pos):
+		"""Look back Previous Char"""
+		previous_char = None
+		previous_pos = pos-1
+		if previous_pos < 0:
+			return None
+		else:
+			previous_char = self.text[previous_pos]
+			return previous_char
 
 	def acquire_char(self, pos):
 		"""Acquire Char Based on Location"""
@@ -153,7 +165,6 @@ class Lexer(object):
 		while self.current_char != '}':
 			self.advance()
 		self.advance() # Skips until the closing curly brace
-		# print "skip_comment\n"
 
 	def skip_another_comment(self):
 		"""Skip "//" Pascal Comments"""
@@ -165,13 +176,14 @@ class Lexer(object):
 		"""Go to the next line"""
 		while self.current_char != '\n' and self.current_char != '\r':
 			self.advance()
-		self.advance()
 
 	def skip_whitespace(self):
 		"""Skip White Spaces"""
-		while self.current_char is not None and self.current_char.isspace():
-			self.advance()
-		# print "skip_whitespace\n"
+		while self.current_char is not None:
+			if self.current_char.isspace():
+				self.advance()
+			else:
+				break
 
 	def peek(self):
 		"""Another Look Ahead Function"""
@@ -234,18 +246,13 @@ class Lexer(object):
 			while self.current_char is not None and self.current_char.isdigit():
 				result += self.current_char
 				self.advance()
-
-			# token = Token('REAL_CONST', float(result))
-
 		else:
 			pass
-			# token = Token('INTEGER_CONST', int(result))
 		
 		print "Get a bin_number", result
 
 		# We do not regard this value as TOKEN, simply report Error
 		return self.bin_error()
-		#return token
 
 	def oct_number(self):
 		"""Acquire Oct. Number, Report Error"""
@@ -261,18 +268,13 @@ class Lexer(object):
 			while self.current_char is not None and self.current_char.isdigit():
 				result += self.current_char
 				self.advance()
-
-			# token = Token('REAL_CONST', float(result))
-
 		else:
 			pass
-			# token = Token('INTEGER_CONST', int(result))
 		
 		print "Get a oct_number", result
 
 		# We do not regard this value as TOKEN, simply report Error
 		return self.oct_error()
-		#return token
 
 	def hex_number(self):
 		"""Acquire Hex. Number, Report Error"""
@@ -313,17 +315,13 @@ class Lexer(object):
 				else:
 					break
 
-			# token = Token('REAL_CONST', float(result))
-
 		else:
 			pass
-			# token = Token('INTEGER_CONST', int(result))
 		
 		print "Get a hex_number", result
 
 		# We do not regard this value as TOKEN, simply report Error
 		return self.hex_error()
-		#return token
 
 	"""Number Type Judger"""
 
@@ -375,9 +373,15 @@ class Lexer(object):
 				result += self.current_char
 				self.advance()
 			elif self.current_char == '\\':
-				self.advance() # Skip current '\'
-				result += self.current_char # Add the current char, including '\' and '"'
-				self.advance()
+				if self.look_ahead(self.pos) != end_of_string or self.look_back(self.pos) != end_of_string:
+					self.advance() # Skip current '\'
+					result += self.current_char # Add the current char, including '\' and '"'
+					self.advance()
+				else: # eg. a := '\';
+					result += self.current_char
+					self.advance()
+					self.advance()
+					break
 			elif self.current_char == end_of_string:
 				self.advance()
 				break
@@ -386,6 +390,7 @@ class Lexer(object):
 
 		tocken = Token('STRING', result)
 		return tocken
+
 
 	"""Lexer: Acquiring Tokens"""
 
@@ -399,6 +404,8 @@ class Lexer(object):
 			# New line
 			if ord(self.current_char) == ord('\n'):
 				self.go_newline()
+				if self.current_char == None:
+					break
 
 			# For ignoring "//" comments, skip them when lexer analysing
 			if self.current_char == '/':
