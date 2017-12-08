@@ -205,7 +205,7 @@ class Lexer(object):
 			result += self.current_char
 			self.advance()
 
-		token = RESERVED_KEYWORDS.get(result, Token(ID, result))
+		token = RESERVED_KEYWORDS.get(result.upper(), Token(ID, result))
 		return token
 
 	"""Handling Numbers"""
