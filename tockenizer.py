@@ -89,6 +89,12 @@ RESERVED_KEYWORDS = {
 }
 
 class Lexer(object):
+	list_id = []
+	list_key_word = []
+	list_number = []
+	list_signal = []
+	list_string = []
+
 	"""A Lexer for Pascal Language"""
 	def __init__(self,text):
 		self.text = text
@@ -206,6 +212,7 @@ class Lexer(object):
 			self.advance()
 
 		token = RESERVED_KEYWORDS.get(result.upper(), Token(ID, result))
+		self.list_key_word.append(token)
 		return token
 
 	"""Handling Numbers"""
@@ -389,10 +396,12 @@ class Lexer(object):
 			elif self.current_char == end_of_string:
 				self.advance()
 				break
+			# TBD
 			else:
 				self.error()
 
 		tocken = Token('STRING', result)
+		self.list_string.append(tocken)
 		return tocken
 
 

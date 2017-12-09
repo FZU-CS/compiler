@@ -27,5 +27,13 @@ def main():
 		current_token = lexer.get_next_token()
 		print current_token, '\n'
 
+	print "Output of signal table:"
+	print "IDs:"
+	for i in lexer.list_key_word:
+		print i
+	print "Strings:"
+	for i in lexer.list_string:
+		print i
+
 if __name__ == '__main__':
 	main()
