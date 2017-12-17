@@ -8,7 +8,10 @@ Lexer:
   * 2.Warning if an integer is bigger than 2^31;
   * 3.Analysing type "string".
 
-Grammatical Analysis: TBD
+Grammatical Analysis: 
+  * Based on the subset of "grammar.txt", create the SLR(1) analyse table;
+  * Output the error to assigned log file;
+  * Print the processing messages during analysing statements, including the contents of stack and applied actions.
 
 IR Generating: TBD
 
