@@ -29,7 +29,7 @@ def test_lexer(pas_programs_dir):
         print "===Test%d: %s===" % (lexer_test_idx, p)
 
         # Execute tests
-        cmd = "python ../run.py %s%s" % (pas_programs_dir, p)
+        cmd = "python ../run_lexer.py %s%s" % (pas_programs_dir, p)
         status, output = commands.getstatusoutput(cmd)
         if status != 0:
             print output

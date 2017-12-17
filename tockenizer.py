@@ -239,7 +239,8 @@ class Lexer(object):
 				print "Error: The integer is exceeded!"
 			token = Token('INTEGER_CONST', int(result))
 		
-		print "Get a dec_number", result
+		# print dec number as the first presentation
+		# print "Get a dec_number", result
 
 		return token
 

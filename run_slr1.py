@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-"""Writen by Wasdns(XiangChen), 2017.12.2"""
+"""Writen by Wasdns(XiangChen), 2017.12.17"""
 
-"""Compiler Tasks: The Lexer for Pascal language"""
+"""Compiler Tasks: The SLR(1) Analyzer for Pascal language"""
 
 # This project refers to the following materials:
 #
@@ -25,15 +25,9 @@ def main():
 			#print lexer.current_line
 			break
 		current_token = lexer.get_next_token()
-		print current_token, '\n'
+		print current_token
 
-	print "Output of signal table:"
-	print "IDs:"
-	for i in lexer.list_key_word:
-		print i
-	print "Strings:"
-	for i in lexer.list_string:
-		print i
+	
 
 if __name__ == '__main__':
 	main()
