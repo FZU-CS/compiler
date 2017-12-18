@@ -1,11 +1,9 @@
-S  ->  program id;  compound_stmt.
+S  ->  program id;  |  compound_stmt.
 compound_stmt  ->  begin stmts end
 stmts  ->  stmt | stmts; stmt
-stmt  ->  id := expr  |  compound_stmt | if_stmt | for_stmt
-          | while bool do stmt | ε
+stmt  ->  id := expr  |  compound_stmt | if_stmt | for_stmt | while bool do stmt | ε
 if_stmt -> if bool then stmt | if bool then stmt else stmt 
-for_stmt ->  for id := expr  to  expr  do  stmt 
-                |  for id := expr  downto  expr  do  stmt 
+for_stmt ->  for id := expr  to  expr  do  stmt |  for id := expr  downto  expr  do  stmt 
 bool ->  expr > expr | expr < expr 
 expr -> expr + expr | expr - expr | expr * expr | expr / expr | expr ^ factor |  factor
 factor ->  id | num | ( expr )

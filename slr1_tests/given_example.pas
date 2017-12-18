@@ -1,4 +1,4 @@
-program test;
+program test
 begin
 	x:=19; 
 	for i:=100 downto 15 do
