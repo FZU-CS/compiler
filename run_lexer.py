@@ -13,7 +13,7 @@
 import sys
 from collections import OrderedDict
 
-from tockenizer import Lexer
+from src.tockenizer import Lexer
 
 def main():
 	text = open(sys.argv[1], 'rU').read()
