@@ -12,6 +12,9 @@ Grammatical Analysis:
   * Based on the subset of "grammar.txt", create the SLR(1) analyse table;
   * Output the error to assigned log file;
   * Print the processing messages during analysing statements, including the contents of stack and applied actions.
+  * Append: 
+    * Grammar of "Grammatical Analysis": grammar/grammar.txt
+    * Test data: slr1_tests/given_example.pas
 
 IR Generating: TBD
 
