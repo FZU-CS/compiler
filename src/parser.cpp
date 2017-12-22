@@ -9,54 +9,17 @@
 #include <set>
 using namespace std;
 
-/*
- S' S
- 0  S->program id ; compound_stmt .
- 1  compound_stmt->begin stmts end
- 2  stmts->stmt
- 3  stmts->stmts ; stmt
- 4  stmt->id := expr
- 5  stmt->compound_stmt
- 6  stmt->if_stmt
- 7  stmt->for_stmt
- 8  stmt->while bool do stmt
- 9  stmt->ε
- 10 if_stmt->if bool then stmt
- 11 if_stmt->if bool then stmt else stmt
- 12 for_stmt->for id := expr  to  expr  do  stmt
- 13 for_stmt->for id := expr  downto  expr  do  stmt
- 14 bool->expr > expr
- 15 bool->expr < expr
- 16 expr->expr + expr
- 17 expr->expr - expr
- 18 expr->expr * expr
- 19 expr->expr / expr
- 20 expr->expr ^ factor
- 21 expr->factor
- 22 factor->id
- 23 factor->num
- 24 factor->( expr )
- */
-
 int GRAMMAR_CNT = 26;
 int TERMINA_CNT = 27;
 int NONTERMINA_CNT = 10;
 int ClosureId = 0;
 vector<int> RIGHT[15];
 
-// 词素
 struct Token {
     int type; // 1非终结符 2终结符
     string val;
 }nonTermina[15],termina[30];
 
-
-map<string,int> unit;
-map<pair<int,string> ,int> gotoMap;
-string s[15]={"S'","S","compound_stmt","stmts","stmt","if_stmt","for_stmt","bool","expr","factor"};
-string s2[30]={"id",";",".","begin","end",":=","while","do","if","then","else","to","downto",">","<","+", "-","*","/","^","num","(",")","program","for","$","ε"};
-
-// 文法
 struct Grammar {
     int id;
     vector<Token> left,right;
@@ -66,10 +29,27 @@ struct Grammar {
         return leftString < g.leftString;
     }
 } gs[30];
+struct F {
+    set<string> v;
+} firsts[60],follows[60];
+
+struct Closure {
+    int id;
+    vector<pair<Grammar,int> > clo;
+    vector<pair<int,int> > record;
+    map<string,int> succeed_s;//移入
+    map<string,int> succeed_r;//规约
+} closures[100],cloTmp[100];
+
+map<string,int> unit;
+map<pair<int,string> ,int> gotoMap;
+string s[15]={"S'","S","compound_stmt","stmts","stmt","if_stmt","for_stmt","bool","expr","factor"};
+string s2[30]={"id",";",".","begin","end",":=","while","do","if","then","else","to","downto",">","<","+", "-","*","/","^","num","(",")","program","for","$","ε"};
+
+
 
 //非终结符
 void getNonTerminaMap() {
-    //for(int i=0;i<9;++i) cout<<i+1<<" "<<s[i]<<endl;
     for (int i=0;i<NONTERMINA_CNT;++i) {
         nonTermina[i].type = 1;
         nonTermina[i].val = s[i];
@@ -79,7 +59,6 @@ void getNonTerminaMap() {
 
 //终结符
 void getTerminaMap() {
-    //for(int i=0;i<23;++i) cout<<i+21<<" "<<s2[i]<<endl;
     for (int i=0;i<TERMINA_CNT;++i) {
         termina[i].type = 2;
         termina[i].val = s2[i];
@@ -106,8 +85,8 @@ void splitString(const string& s, vector<string>& v, const string& c) {
     if (pos1 != s.length()) v.push_back(s.substr(pos1));
 }
 
-void getGrammar() {
-    freopen("../grammar/parsed_grammar.txt", "r", stdin);
+void getGrammar(char file[]) {
+    freopen(file, "r", stdin);
     char line[1024];
     int cnt = 0;
     Token t;
@@ -132,34 +111,29 @@ void getGrammar() {
             }
             else gs[cnt].left.push_back(t);
         }
-        //cout<<rightString<<endl;
         gs[cnt].id = cnt;
         gs[cnt].leftString = leftString;
         gs[cnt].rightString = rightString;
         RIGHT[unit[v[0]]-1].push_back(cnt);
-        ++cnt;//cout<<endl;
-    }//cout<<cnt<<endl;
+        ++cnt;
+    }
+    fclose(stdin);
 }
 
-struct F {
-    set<string> v;
-} firsts[60],follows[60];
-
-// 计算非终结符的FIRST集合
 set<string>::iterator it;
+// 计算非终结符的FIRST集合
 void calFirst() {
     // 注意ε
     for (int i=0;i<TERMINA_CNT;++i) { // 计算终结符号
-        // if(termina[21+i].val == "ε") continue;
         firsts[21+i].v.insert(termina[i].val);
     }
     Token token;
     while(1) {
         bool done = false;
         for (int i=0;i<NONTERMINA_CNT;++i) {
-            for (int j=0;j<RIGHT[i].size();++j) { // 非终结符i->的所有右部
+            for (int j=0;j<RIGHT[i].size();++j) {
                 bool empty = false;
-                for (int k=0;k<gs[RIGHT[i][j]].right.size();++k) { // 右部的第k个
+                for (int k=0;k<gs[RIGHT[i][j]].right.size();++k) {
                     token = gs[RIGHT[i][j]].right[k];
                     if (token.type == 2) {
                         if (!firsts[i+1].v.count(token.val)) {
@@ -225,9 +199,7 @@ void calFollow() {
         for(int i=0;i<GRAMMAR_CNT;++i) {
             int sz = (int)gs[i].right.size();
             int left = unit[gs[i].left[0].val];
-            
             int p = sz-1;
-            
             while(p >= 0) {
                 bool empty = false;
                 int now = unit[gs[i].right[p].val];
@@ -247,19 +219,10 @@ void calFollow() {
                 --p;
             }
         }
-        
         if(done == false) break;
     }
 }
-struct Closure {
-    int id;
-    vector<pair<Grammar,int> > clo;
-    vector<pair<int,int> > record;
-    map<string,int> succeed_s;//移入
-    map<string,int> succeed_r;//规约
-} closures[100],cloTmp[100];
 
-//构建LR（0）项目集族
 //扩展当前项集
 void extendClosure(vector<pair<Grammar,int> > &c) {
     map<string,int> mp;
@@ -291,14 +254,12 @@ void extendClosure(vector<pair<Grammar,int> > &c) {
 }
 
 //表格表示的SLR自动机
-void printDFA() {
-    freopen("project_set.txt","w",stdout);
+void printDFA(char file[]) {
+    freopen(file,"w",stdout);
     Grammar g;
-    //13 34 23 12
     string table0 = "-----------------------------------------------------------------------------------------------------------------";
     string table1 = "| 状态 |                      项目集                      |                    后继符号                      |后继状态|";
-    cout<<table0<<endl;
-    cout<<table1<<endl;
+    cout<<table0<<endl<<table1<<endl;
     for(int i=0;i<=ClosureId;++i) {
         cout<<table0<<endl;
         string state = "S"+to_string(i);
@@ -329,6 +290,7 @@ void printDFA() {
         }
     }
     cout<<table0<<endl;
+    fclose(stdout);
 }
 
 map<int,string> from;
@@ -372,7 +334,7 @@ bool setForm(Closure &clo) {
 }
 
 void printFirst() {
-    cout<<"=========================================FIRST集========================================="<<endl<<endl;
+    cout<<"\n====FIRST====\n"<<endl;
     for(int i=1;i<21+TERMINA_CNT-1;++i) {
         if(i > NONTERMINA_CNT && i < 21) continue;
         cout<<"FIRST(";
@@ -385,11 +347,11 @@ void printFirst() {
         if(s != "") s = s.substr(0,s.length()-2);
         cout<<s<<"}"<<endl;
     }
-    cout<<endl<<"========================================================================================="<<endl<<endl;
+    cout<< "\n==============\n" <<endl;
 }
 
 void printFollow() {
-    cout<<"=============================================================FOLLOW集============================================================="<<endl<<endl;
+    cout<<"====FOLLOW===="<<endl<<endl;
     for(int i=2;i<=NONTERMINA_CNT;++i) {
         cout<<"FOLLOW("<<nonTermina[i-1].val<<") = {";
         string s = "";
@@ -399,28 +361,25 @@ void printFollow() {
         if(s != "") s = s.substr(0,s.length()-2);
         cout<<s<<"}"<<endl;
     }
-    cout<<endl<<"=================================================================================================================================="<<endl<<endl;
+    cout<<endl<<"=============="<<endl<<endl;
 }
 
 string table[70][70];
-
+map<string, int > table_pos;
 void setActionAndGoto() {
     Grammar g;
     for(int i=0;i<=ClosureId;++i) {
         for(int j=0;j<closures[i].clo.size();++j) {
-            int pos = closures[i].clo[j].second;
             g = closures[i].clo[j].first;
-            if(closures[i].clo[j].second >= g.right.size()) {//规约项
+            if(closures[i].clo[j].second >= g.right.size()) { // 规约项
                 int left = unit[g.left[0].val];
                 for(it=follows[left].v.begin();it!=follows[left].v.end();++it) {
                     closures[i].succeed_r[*it] = closures[i].clo[j].first.id;
                 }
-            } //else {
-                //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!!!!!
-            
+            }
         }
     }
-    for (int i=0;i<=ClosureId;++i) {
+    for (int i=0; i <= ClosureId; ++i) {
         for (int j=0;j<TERMINA_CNT-1;++j) {
             int keyr = closures[i].succeed_r[termina[j].val];
             int keys = closures[i].succeed_s[termina[j].val];
@@ -432,11 +391,10 @@ void setActionAndGoto() {
                 table[i][j+1] = "S"+to_string(keys);
             }
             if(keyr) {//规约
-                if(keys) table[i][j+1] += "||";
-                table[i][j+1] += "r"+to_string(keyr);
+                //if(keys) table[i][j+1] += "||";
+                if(!keys) table[i][j+1] += "r"+to_string(keyr);
             }
         }
-        
         for(int j=1;j<NONTERMINA_CNT;++j) {
             int keys = closures[i].succeed_s[nonTermina[j].val];
             if(!keys) {
@@ -448,8 +406,8 @@ void setActionAndGoto() {
     }
 }
 
-void printActionAndGoto() {
-    freopen("action_and_goto.txt","w",stdout);
+void printActionAndGoto(char file[]) {
+    freopen(file,"w",stdout);
     string state = "state";
     int cloumn[70];
     for(int i=0;i<70;++i) cloumn[i] = 3;
@@ -460,18 +418,19 @@ void printActionAndGoto() {
     string line = "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
     if(state.length()>cloumn[0]) cloumn[0] = (int)state.length();
     cout<<"|"<<setiosflags(ios::left)<<setw(cloumn[0])<<"state";
- 
+    
     for(int i=0;i<TERMINA_CNT-1;++i) {
+        table_pos[termina[i].val] = i+1;
         if(termina[i].val.length()>cloumn[i+1]) cloumn[i+1] = (int)termina[i].val.length();
         cout<<"|"<<setiosflags(ios::left)<<setw(cloumn[i+1])<<termina[i].val; //cnt++;
     }
-    //cout<<"|"<<setiosflags(ios::left)<<setw(3)<<"$";
     for(int i=1;i<NONTERMINA_CNT;++i) {
+        table_pos[nonTermina[i].val] = i-1+TERMINA_CNT;
         if(nonTermina[i].val.length()>cloumn[i-1+TERMINA_CNT]) cloumn[i-1+TERMINA_CNT] = (int)nonTermina[i].val.length();
         cout<<"|"<<setiosflags(ios::left)<<setw(cloumn[i-1+TERMINA_CNT])<<nonTermina[i].val; //cnt++;
     }
     cout<<"|"<<endl;
-
+    table[1][table_pos["$"]] = "acc";
     
     for(int i=0;i<=ClosureId;++i) {
         cout<<line<<endl;
@@ -485,6 +444,7 @@ void printActionAndGoto() {
         }
         cout<<"|"<<endl;
     }
+    fclose(stdout);
 }
 
 void getCanonical() {
@@ -507,7 +467,6 @@ void getCanonical() {
                     extendClosure(cloTmp[a].clo);
                     // 设置项目集组成
                     if(setForm(cloTmp[a]) == false) {
-                        //closures[i].succeed.push_back(make_pair(from[a], recordSet[cloTmp[a].record]));
                         closures[i].succeed_s[from[a]] = recordSet[cloTmp[a].record];
                         continue;
                     }
@@ -515,27 +474,132 @@ void getCanonical() {
                     closures[ClosureId].id = ClosureId;
                     gotoMap[make_pair(i, from[a])] = ClosureId;
                     closures[i].succeed_s[from[a]] = ClosureId;
-                    // closures[i].succeed.push_back(make_pair(from[a], ClosureId));
                 }
             }
         }
         if(flag) break;
     }
 }
+string inputQueue[1005];
+string symbolStack[1005];
+int stateStack[1005];
+int inputQueueTail;
+void readInput(char file[]) {
+    freopen(file,"r",stdin);
+    string s;
+    int cnt = 0;
+    while(cin>>s) {
+        inputQueue[++cnt] = s;
+    }
+    inputQueue[++cnt] = "$";
+    inputQueueTail = cnt;
+    fclose(stdin);
+}
+void printError(char file[],int x) {
+    freopen(file, "w", stdout);
+    cout<<x<<" error"<<endl;
+    fclose(stdout);
+}
+string programeTable[1005][5];
+void solve(char outputFile[],char errorFile[]) {
+    string s;
+    freopen(outputFile, "w", stdout);
+    int stateStackTop = 0, inputQueueTop = 0, symbolStackTop = 0;
+    stateStack[++stateStackTop] = 0;
+    int a = table_pos[inputQueue[++inputQueueTop]];
+    int cnt = 0;
+    while(1) {
+        ++cnt;
+        if(stateStackTop<=0) {
+            printError(errorFile,1);
+            break;
+        }
+        int top = stateStack[stateStackTop];
+        programeTable[cnt][0] = "("+to_string(cnt)+")";
+        programeTable[cnt][1] = "stateStack: ";
+        for(int i=1;i<=stateStackTop;++i) {
+            programeTable[cnt][1] += to_string(stateStack[i])+" ";
+        }
+        programeTable[cnt][2] = "symbolStack: ";
+        for(int i=1;i<=symbolStackTop;++i) {
+            programeTable[cnt][2] += symbolStack[i]+" ";
+        }
+        programeTable[cnt][3] = "INPUT: ";
+        for(int i=inputQueueTop;i<=inputQueueTail;++i) {
+            programeTable[cnt][3] += inputQueue[i]+" ";
+        }
+        s = table[top][a];
+        if(s == "") {
+            printError(errorFile,2);
+            break;
+        }
+        if(s == "acc") {
+            programeTable[cnt][4] = "accept";
+             cout<<programeTable[cnt][0]<<" "<<programeTable[cnt][1]<<" "<<programeTable[cnt][2]<<" "<<programeTable[cnt][3]<<programeTable[cnt][4]<<endl;
+            break;
+        }
+        else if(s[0] == 's'|| s[0] == 'S') {//移入
+            int num = 0;
+            for(int i=1;i<s.length();++i) {
+                if(s[i]=='|') break;
+                num = num*10+(s[i]-'0');
+            }
+            stateStack[++stateStackTop] = num;
+            symbolStack[++symbolStackTop] = inputQueue[inputQueueTop];
+            string next = inputQueue[++inputQueueTop];
+            a = table_pos[next];
+            programeTable[cnt][4] = "移入";
+        } else if(s[0] == 'r' || s[0] == 'R'){//规约
+            int num = 0;
+            for(int i=1;i<s.length();++i) {
+                if(s[i] == '|') break;
+                num = num*10+(s[i]-'0');
+            }
+            int right = (int)gs[num].right.size();
+            if(symbolStackTop<right||stateStackTop<right) {
+                printError(errorFile,3);
+                break;
+            }
+            if(gs[num].rightString != "") {//需要消耗输入
+                stateStackTop -= right;
+                symbolStackTop -= right;
+            }
+            symbolStack[++symbolStackTop] = gs[num].left[0].val;
+            top = stateStack[stateStackTop];
+            string tmp = table[top][table_pos[gs[num].left[0].val]];
+            int t = 0;
+            for(int h=0;h<tmp.length();++h) {
+                t = t*10+(tmp[h]-'0');
+            }
+            stateStack[++stateStackTop] = t;
+            programeTable[cnt][4] = "根据"+gs[num].leftString+"->"+gs[num].rightString+"规约";
+         }
+        cout<<programeTable[cnt][0]<<" "<<programeTable[cnt][1]<<" "<<programeTable[cnt][2]<<programeTable[cnt][3]<<programeTable[cnt][4]<<endl<<endl;
+    }
+    fclose(stdout);
+}
 
 int main() {
+    char gramarFile[50] = "./grammar.txt";
+    char outputFile[50] = "./output.txt";
+    char actionAndGotoFile[50] = "./action_and_goto.txt";
+    char DFAFile[50] = "./slr.txt";
+    char errorFile[50] = "./error.txt";
+    char inputFile[50] = "./input.txt";
+
     init();
-    getGrammar();
+    getGrammar(gramarFile);
     getCanonical();
 
     calFirst();
-    // printFirst();
+    printFirst();
     calFollow();
-    // printFollow();
- 
-    printDFA();
+    printFollow();
+
+    printDFA(DFAFile);
     setActionAndGoto();
-    printActionAndGoto();
+    printActionAndGoto(actionAndGotoFile);
+    readInput(inputFile);
+    solve(outputFile, errorFile);
     return 0;
 }
-

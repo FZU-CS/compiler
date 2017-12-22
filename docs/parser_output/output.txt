@@ -1,0 +1,265 @@
+(1) stateStack: 0  symbolStack: INPUT: program id ; begin id := num ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(2) stateStack: 0 2  symbolStack: program INPUT: id ; begin id := num ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(3) stateStack: 0 2 3  symbolStack: program id INPUT: ; begin id := num ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(4) stateStack: 0 2 3 4  symbolStack: program id ; INPUT: begin id := num ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(5) stateStack: 0 2 3 4 6  symbolStack: program id ; begin INPUT: id := num ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(6) stateStack: 0 2 3 4 6 10  symbolStack: program id ; begin id INPUT: := num ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(7) stateStack: 0 2 3 4 6 10 19  symbolStack: program id ; begin id := INPUT: num ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(8) stateStack: 0 2 3 4 6 10 19 24  symbolStack: program id ; begin id := num INPUT: ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> num规约
+
+(9) stateStack: 0 2 3 4 6 10 19 22  symbolStack: program id ; begin id := factor INPUT: ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(10) stateStack: 0 2 3 4 6 10 19 29  symbolStack: program id ; begin id := expr INPUT: ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据stmt-> id := expr规约
+
+(11) stateStack: 0 2 3 4 6 9  symbolStack: program id ; begin stmt INPUT: ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据stmts-> stmt规约
+
+(12) stateStack: 0 2 3 4 6 8  symbolStack: program id ; begin stmts INPUT: ; for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(13) stateStack: 0 2 3 4 6 8 18  symbolStack: program id ; begin stmts ; INPUT: for id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(14) stateStack: 0 2 3 4 6 8 18 16  symbolStack: program id ; begin stmts ; for INPUT: id := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(15) stateStack: 0 2 3 4 6 8 18 16 27  symbolStack: program id ; begin stmts ; for id INPUT: := num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(16) stateStack: 0 2 3 4 6 8 18 16 27 40  symbolStack: program id ; begin stmts ; for id := INPUT: num downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(17) stateStack: 0 2 3 4 6 8 18 16 27 40 24  symbolStack: program id ; begin stmts ; for id := num INPUT: downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> num规约
+
+(18) stateStack: 0 2 3 4 6 8 18 16 27 40 22  symbolStack: program id ; begin stmts ; for id := factor INPUT: downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(19) stateStack: 0 2 3 4 6 8 18 16 27 40 51  symbolStack: program id ; begin stmts ; for id := expr INPUT: downto num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(20) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54  symbolStack: program id ; begin stmts ; for id := expr downto INPUT: num do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(21) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 24  symbolStack: program id ; begin stmts ; for id := expr downto num INPUT: do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> num规约
+
+(22) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 22  symbolStack: program id ; begin stmts ; for id := expr downto factor INPUT: do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(23) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57  symbolStack: program id ; begin stmts ; for id := expr downto expr INPUT: do if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(24) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59  symbolStack: program id ; begin stmts ; for id := expr downto expr do INPUT: if id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(25) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15  symbolStack: program id ; begin stmts ; for id := expr downto expr do if INPUT: id < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(26) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if id INPUT: < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(27) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if factor INPUT: < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(28) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr INPUT: < id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(29) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < INPUT: id + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(30) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < id INPUT: + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(31) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < factor INPUT: + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(32) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr INPUT: + ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(33) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + INPUT: ( num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(34) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( INPUT: num - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(35) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 24  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( num INPUT: - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> num规约
+
+(36) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( factor INPUT: - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(37) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 38  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( expr INPUT: - num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(38) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 38 34  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( expr - INPUT: num ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(39) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 38 34 24  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( expr - num INPUT: ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> num规约
+
+(40) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 38 34 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( expr - factor INPUT: ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(41) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 38 34 45  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( expr - expr INPUT: ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> expr - expr规约
+
+(42) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 38  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( expr INPUT: ) then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(43) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 25 38 49  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + ( expr ) INPUT: then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> ( expr )规约
+
+(44) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + factor INPUT: then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(45) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43 33 44  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr + expr INPUT: then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> expr + expr规约
+
+(46) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 21 32 43  symbolStack: program id ; begin stmts ; for id := expr downto expr do if expr < expr INPUT: then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据bool-> expr < expr规约
+
+(47) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool INPUT: then id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(48) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then INPUT: id := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(49) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 10  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then id INPUT: := id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(50) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 10 19  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then id := INPUT: id else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(51) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 10 19 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then id := id INPUT: else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(52) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 10 19 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then id := factor INPUT: else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(53) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 10 19 29  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then id := expr INPUT: else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据stmt-> id := expr规约
+
+(54) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt INPUT: else begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(55) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else INPUT: begin while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(56) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin INPUT: while id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(57) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while INPUT: id * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(58) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while id INPUT: * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(59) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while factor INPUT: * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(60) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr INPUT: * id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(61) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * INPUT: id + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(62) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * id INPUT: + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(63) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * factor INPUT: + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(64) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 46  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * expr INPUT: + id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(65) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 46 33  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * expr + INPUT: id > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(66) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 46 33 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * expr + id INPUT: > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(67) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 46 33 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * expr + factor INPUT: > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(68) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 46 33 44  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * expr + expr INPUT: > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> expr + expr规约
+
+(69) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 35 46  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr * expr INPUT: > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> expr * expr规约
+
+(70) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr INPUT: > id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(71) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 31  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr > INPUT: id do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(72) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 31 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr > id INPUT: do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(73) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 31 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr > factor INPUT: do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(74) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 21 31 42  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while expr > expr INPUT: do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 根据bool-> expr > expr规约
+
+(75) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool INPUT: do begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(76) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do INPUT: begin id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(77) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin INPUT: id := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(78) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id INPUT: := id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(79) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := INPUT: id + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(80) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := id INPUT: + id ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(81) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := factor INPUT: + id ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(82) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr INPUT: + id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(83) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + INPUT: id ^ num - num end ; id := id * num + id end end . $ 移入
+
+(84) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + id INPUT: ^ num - num end ; id := id * num + id end end . $ 根据factor-> id规约
+
+(85) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + factor INPUT: ^ num - num end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(86) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr INPUT: ^ num - num end ; id := id * num + id end end . $ 移入
+
+(87) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44 37  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr ^ INPUT: num - num end ; id := id * num + id end end . $ 移入
+
+(88) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44 37 24  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr ^ num INPUT: - num end ; id := id * num + id end end . $ 根据factor-> num规约
+
+(89) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44 37 48  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr ^ factor INPUT: - num end ; id := id * num + id end end . $ 根据expr-> expr ^ factor规约
+
+(90) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr INPUT: - num end ; id := id * num + id end end . $ 移入
+
+(91) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44 34  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr - INPUT: num end ; id := id * num + id end end . $ 移入
+
+(92) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44 34 24  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr - num INPUT: end ; id := id * num + id end end . $ 根据factor-> num规约
+
+(93) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44 34 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr - factor INPUT: end ; id := id * num + id end end . $ 根据expr-> factor规约
+
+(94) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44 34 45  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr - expr INPUT: end ; id := id * num + id end end . $ 根据expr-> expr - expr规约
+
+(95) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29 33 44  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr + expr INPUT: end ; id := id * num + id end end . $ 根据expr-> expr + expr规约
+
+(96) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 10 19 29  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin id := expr INPUT: end ; id := id * num + id end end . $ 根据stmt-> id := expr规约
+
+(97) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 9  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin stmt INPUT: end ; id := id * num + id end end . $ 根据stmts-> stmt规约
+
+(98) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 8  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin stmts INPUT: end ; id := id * num + id end end . $ 移入
+
+(99) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 6 8 17  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do begin stmts end INPUT: ; id := id * num + id end end . $ 根据compound_stmt-> begin stmts end规约
+
+(100) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 11  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do compound_stmt INPUT: ; id := id * num + id end end . $ 根据stmt-> compound_stmt规约
+
+(101) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 14 20 30 41  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin while bool do stmt INPUT: ; id := id * num + id end end . $ 根据stmt-> while bool do stmt规约
+
+(102) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 9  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmt INPUT: ; id := id * num + id end end . $ 根据stmts-> stmt规约
+
+(103) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts INPUT: ; id := id * num + id end end . $ 移入
+
+(104) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; INPUT: id := id * num + id end end . $ 移入
+
+(105) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id INPUT: := id * num + id end end . $ 移入
+
+(106) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := INPUT: id * num + id end end . $ 移入
+
+(107) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := id INPUT: * num + id end end . $ 根据factor-> id规约
+
+(108) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := factor INPUT: * num + id end end . $ 根据expr-> factor规约
+
+(109) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr INPUT: * num + id end end . $ 移入
+
+(110) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * INPUT: num + id end end . $ 移入
+
+(111) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 24  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * num INPUT: + id end end . $ 根据factor-> num规约
+
+(112) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * factor INPUT: + id end end . $ 根据expr-> factor规约
+
+(113) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 46  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * expr INPUT: + id end end . $ 移入
+
+(114) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 46 33  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * expr + INPUT: id end end . $ 移入
+
+(115) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 46 33 23  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * expr + id INPUT: end end . $ 根据factor-> id规约
+
+(116) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 46 33 22  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * expr + factor INPUT: end end . $ 根据expr-> factor规约
+
+(117) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 46 33 44  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * expr + expr INPUT: end end . $ 根据expr-> expr + expr规约
+
+(118) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29 35 46  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr * expr INPUT: end end . $ 根据expr-> expr * expr规约
+
+(119) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 10 19 29  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; id := expr INPUT: end end . $ 根据stmt-> id := expr规约
+
+(120) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 18 28  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts ; stmt INPUT: end end . $ 根据stmts-> stmts ; stmt规约
+
+(121) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts INPUT: end end . $ 移入
+
+(122) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 6 8 17  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else begin stmts end INPUT: end . $ 根据compound_stmt-> begin stmts end规约
+
+(123) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 11  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else compound_stmt INPUT: end . $ 根据stmt-> compound_stmt规约
+
+(124) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 15 26 39 50 52 55  symbolStack: program id ; begin stmts ; for id := expr downto expr do if bool then stmt else stmt INPUT: end . $ 根据if_stmt-> if bool then stmt else stmt规约
+
+(125) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 12  symbolStack: program id ; begin stmts ; for id := expr downto expr do if_stmt INPUT: end . $ 根据stmt-> if_stmt规约
+
+(126) stateStack: 0 2 3 4 6 8 18 16 27 40 51 54 57 59 61  symbolStack: program id ; begin stmts ; for id := expr downto expr do stmt INPUT: end . $ 根据for_stmt-> for id := expr downto expr do stmt规约
+
+(127) stateStack: 0 2 3 4 6 8 18 13  symbolStack: program id ; begin stmts ; for_stmt INPUT: end . $ 根据stmt-> for_stmt规约
+
+(128) stateStack: 0 2 3 4 6 8 18 28  symbolStack: program id ; begin stmts ; stmt INPUT: end . $ 根据stmts-> stmts ; stmt规约
+
+(129) stateStack: 0 2 3 4 6 8  symbolStack: program id ; begin stmts INPUT: end . $ 移入
+
+(130) stateStack: 0 2 3 4 6 8 17  symbolStack: program id ; begin stmts end INPUT: . $ 根据compound_stmt-> begin stmts end规约
+
+(131) stateStack: 0 2 3 4 5  symbolStack: program id ; compound_stmt INPUT: . $ 移入
+
+(132) stateStack: 0 2 3 4 5 7  symbolStack: program id ; compound_stmt . INPUT: $ 根据S-> program id ; compound_stmt .规约
+
+(133) stateStack: 0 1  symbolStack: S  INPUT: $ accept

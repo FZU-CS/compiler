@@ -1,0 +1,56 @@
+
+====FIRST====
+
+FIRST(S') = { program }
+FIRST(S) = { program }
+FIRST(compound_stmt) = { begin }
+FIRST(stmts) = { ; ,  begin ,  for ,  id ,  if ,  while ,  ε }
+FIRST(stmt) = { begin ,  for ,  id ,  if ,  while ,  ε }
+FIRST(if_stmt) = { if }
+FIRST(for_stmt) = { for }
+FIRST(bool) = { ( ,  id ,  num }
+FIRST(expr) = { ( ,  id ,  num }
+FIRST(factor) = { ( ,  id ,  num }
+FIRST(id) = { id }
+FIRST(;) = { ; }
+FIRST(.) = { . }
+FIRST(begin) = { begin }
+FIRST(end) = { end }
+FIRST(:=) = { := }
+FIRST(while) = { while }
+FIRST(do) = { do }
+FIRST(if) = { if }
+FIRST(then) = { then }
+FIRST(else) = { else }
+FIRST(to) = { to }
+FIRST(downto) = { downto }
+FIRST(>) = { > }
+FIRST(<) = { < }
+FIRST(+) = { + }
+FIRST(-) = { - }
+FIRST(*) = { * }
+FIRST(/) = { / }
+FIRST(^) = { ^ }
+FIRST(num) = { num }
+FIRST(() = { ( }
+FIRST()) = { ) }
+FIRST(program) = { program }
+FIRST(for) = { for }
+FIRST($) = { $ }
+
+==============
+
+====FOLLOW====
+
+FOLLOW(S) = { $ }
+FOLLOW(compound_stmt) = { . ,  ; ,  else ,  end }
+FOLLOW(stmts) = { ; ,  end }
+FOLLOW(stmt) = { ; ,  else ,  end }
+FOLLOW(if_stmt) = { ; ,  else ,  end }
+FOLLOW(for_stmt) = { ; ,  else ,  end }
+FOLLOW(bool) = { do ,  then }
+FOLLOW(expr) = { ) ,  * ,  + ,  - ,  / ,  ; ,  < ,  > ,  ^ ,  do ,  downto ,  else ,  end ,  then ,  to }
+FOLLOW(factor) = { ) ,  * ,  + ,  - ,  / ,  ; ,  < ,  > ,  ^ ,  do ,  downto ,  else ,  end ,  then ,  to }
+
+==============
+
