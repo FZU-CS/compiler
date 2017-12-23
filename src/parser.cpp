@@ -259,7 +259,7 @@ void printDFA(char file[]) {
     Grammar g;
     string table0 = "-----------------------------------------------------------------------------------------------------------------";
     string table1 = "| 状态 |                      项目集                      |                    后继符号                      |后继状态|";
-    cout<<table0<<endl<<table1<<endl;
+    cout<<table0<<endl;
     for(int i=0;i<=ClosureId;++i) {
         cout<<table0<<endl;
         string state = "S"+to_string(i);
