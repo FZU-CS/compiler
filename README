@@ -1,7 +1,8 @@
 This repository maintains the coding tasks of "Compiler Principles", FZU, 2017 Fall. 
 
 Introduction: 
-  The basic of this repository is a compiler for Pascal language. We make some efforts on accommodating to the additional requirements of this experiment, including:
+  The basic of this repository is a compiler for Pascal language. We make some efforts
+  on accommodating to the additional requirements of this experiment, including:
 
 Lexer: 
   * 1.Analysing specific integer number, such as Oct, Bin, Hex.
@@ -11,17 +12,22 @@ Lexer:
 Grammatical Analysis: 
   * Based on the subset of "grammar.txt", create the SLR(1) analyse table;
   * Output the error to assigned log file;
-  * Print the processing messages during analysing statements, including the contents of stack and applied actions.
+  * Print the processing messages during analysing statements, including the 
+    contents of stack and applied actions.
   * Append: 
     * Grammar of "Grammatical Analysis": grammar/grammar.txt
     * Test data: slr1_tests/given_example.pas
 
 IR Generating: TBD
 
-Any issues: 
-  * wasdnsxchen@gmail.com
+For running our demonstration: See ROADMAP for details.
 
 References:
   * [1]Wikipedia: https://en.wikipedia.org/wiki/Pascal_%28programming_language%29
   * [2]Pascal-Interpreter: https://github.com/kevallakhani95/Pascal-Interpreter/
   * [3]P4-HLIR: https://github.com/p4lang/p4-hlir
+
+Author: Wasdns, syayao, Wowkiee.
+
+Any issues: 
+  * wasdnsxchen@gmail.com
