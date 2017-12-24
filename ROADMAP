@@ -1,0 +1,17 @@
+ROADMAP
+
+
+Running Lexer: ./run_lexer.py path/to/pascal/program
+
+eg. ./run_lexer.py lexer_tests/helloworld.pas
+
+
+Running SLR(1)-based Parser: ./run_parser_demo.sh
+
+This command would first generate a folder named build. And then
+the procedure would feed the executable file "parser" with the 
+input tocken file, i.e.parser_tests/standard_input.txt in our demo.
+
+We have not combined the C++ parser and Python lexer yet. Welcome to
+submit a PR to implement it.
+
