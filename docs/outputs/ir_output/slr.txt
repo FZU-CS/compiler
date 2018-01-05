@@ -1,0 +1,246 @@
+-----------------------------------------------------------------------------------------------------------------
+| 状态 |                      项目集                      |                    后继符号                      |后继状态|
+-----------------------------------------------------------------------------------------------------------------
+|S0   |S' -> ·S                                         |S                                               |S1    |
+|     |S -> ·program id ; compound_stmt .               |program                                         |S2    |
+|     |S -> ·program ( id_lists ) ; compound_stmt .     |program                                         |S2    |
+-----------------------------------------------------------------------------------------------------------------
+|S1   |S' -> S·                                         |#S' -> S                                        |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S2   |S -> program ·id ; compound_stmt .               |id                                              |S3    |
+|     |S -> program ·( id_lists ) ; compound_stmt .     |(                                               |S4    |
+-----------------------------------------------------------------------------------------------------------------
+|S3   |S -> program id ·; compound_stmt .               |;                                               |S5    |
+-----------------------------------------------------------------------------------------------------------------
+|S4   |S -> program ( ·id_lists ) ; compound_stmt .     |id_lists                                        |S6    |
+|     |id_lists -> ·id                                  |id                                              |S7    |
+|     |id_lists -> ·id_lists , id                       |id_lists                                        |S6    |
+-----------------------------------------------------------------------------------------------------------------
+|S5   |S -> program id ; ·compound_stmt .               |compound_stmt                                   |S8    |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S6   |S -> program ( id_lists ·) ; compound_stmt .     |)                                               |S10   |
+|     |id_lists -> id_lists ·, id                       |,                                               |S11   |
+-----------------------------------------------------------------------------------------------------------------
+|S7   |id_lists -> id·                                  |#id_lists -> id                                 |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S8   |S -> program id ; compound_stmt ·.               |.                                               |S12   |
+-----------------------------------------------------------------------------------------------------------------
+|S9   |compound_stmt -> begin ·optional_stmts end       |optional_stmts                                  |S13   |
+|     |optional_stmts -> ·stmts                         |stmts                                           |S14   |
+|     |optional_stmts ->·                               |#optional_stmts ->                              |S56   |
+|     |stmts -> ·stmt                                   |stmt                                            |S15   |
+|     |stmts -> ·stmts ; stmt                           |stmts                                           |S14   |
+|     |stmt -> ·id := expr                              |id                                              |S16   |
+|     |stmt -> ·compound_stmt                           |compound_stmt                                   |S17   |
+|     |stmt -> ·if bool then stmt                       |if                                              |S18   |
+|     |stmt -> ·if bool then stmt else stmt             |if                                              |S18   |
+|     |stmt -> ·while bool do stmt                      |while                                           |S19   |
+|     |stmt -> ·repeat stmts until bool                 |repeat                                          |S20   |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S10  |S -> program ( id_lists ) ·; compound_stmt .     |;                                               |S21   |
+-----------------------------------------------------------------------------------------------------------------
+|S11  |id_lists -> id_lists , ·id                       |id                                              |S22   |
+-----------------------------------------------------------------------------------------------------------------
+|S12  |S -> program id ; compound_stmt .·               |#S -> program id ; compound_stmt .              |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S13  |compound_stmt -> begin optional_stmts ·end       |end                                             |S23   |
+-----------------------------------------------------------------------------------------------------------------
+|S14  |optional_stmts -> stmts·                         |#optional_stmts -> stmts                        |S56   |
+|     |stmts -> stmts ·; stmt                           |;                                               |S24   |
+-----------------------------------------------------------------------------------------------------------------
+|S15  |stmts -> stmt·                                   |#stmts -> stmt                                  |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S16  |stmt -> id ·:= expr                              |:=                                              |S25   |
+-----------------------------------------------------------------------------------------------------------------
+|S17  |stmt -> compound_stmt·                           |#stmt -> compound_stmt                          |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S18  |stmt -> if ·bool then stmt                       |bool                                            |S26   |
+|     |stmt -> if ·bool then stmt else stmt             |bool                                            |S26   |
+|     |bool -> ·expr < expr                             |expr                                            |S27   |
+|     |expr -> ·expr + term                             |expr                                            |S27   |
+|     |expr -> ·expr - term                             |expr                                            |S27   |
+|     |expr -> ·term                                    |term                                            |S28   |
+|     |term -> ·term * factor                           |term                                            |S28   |
+|     |term -> ·term / factor                           |term                                            |S28   |
+|     |term -> ·factor                                  |factor                                          |S29   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S19  |stmt -> while ·bool do stmt                      |bool                                            |S32   |
+|     |bool -> ·expr < expr                             |expr                                            |S27   |
+|     |expr -> ·expr + term                             |expr                                            |S27   |
+|     |expr -> ·expr - term                             |expr                                            |S27   |
+|     |expr -> ·term                                    |term                                            |S28   |
+|     |term -> ·term * factor                           |term                                            |S28   |
+|     |term -> ·term / factor                           |term                                            |S28   |
+|     |term -> ·factor                                  |factor                                          |S29   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S20  |stmt -> repeat ·stmts until bool                 |stmts                                           |S33   |
+|     |stmts -> ·stmt                                   |stmt                                            |S15   |
+|     |stmts -> ·stmts ; stmt                           |stmts                                           |S33   |
+|     |stmt -> ·id := expr                              |id                                              |S16   |
+|     |stmt -> ·compound_stmt                           |compound_stmt                                   |S17   |
+|     |stmt -> ·if bool then stmt                       |if                                              |S18   |
+|     |stmt -> ·if bool then stmt else stmt             |if                                              |S18   |
+|     |stmt -> ·while bool do stmt                      |while                                           |S19   |
+|     |stmt -> ·repeat stmts until bool                 |repeat                                          |S20   |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S21  |S -> program ( id_lists ) ; ·compound_stmt .     |compound_stmt                                   |S34   |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S22  |id_lists -> id_lists , id·                       |#id_lists -> id_lists , id                      |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S23  |compound_stmt -> begin optional_stmts end·       |#compound_stmt -> begin optional_stmts end      |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S24  |stmts -> stmts ; ·stmt                           |stmt                                            |S35   |
+|     |stmt -> ·id := expr                              |id                                              |S16   |
+|     |stmt -> ·compound_stmt                           |compound_stmt                                   |S17   |
+|     |stmt -> ·if bool then stmt                       |if                                              |S18   |
+|     |stmt -> ·if bool then stmt else stmt             |if                                              |S18   |
+|     |stmt -> ·while bool do stmt                      |while                                           |S19   |
+|     |stmt -> ·repeat stmts until bool                 |repeat                                          |S20   |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S25  |stmt -> id := ·expr                              |expr                                            |S36   |
+|     |expr -> ·expr + term                             |expr                                            |S36   |
+|     |expr -> ·expr - term                             |expr                                            |S36   |
+|     |expr -> ·term                                    |term                                            |S28   |
+|     |term -> ·term * factor                           |term                                            |S28   |
+|     |term -> ·term / factor                           |term                                            |S28   |
+|     |term -> ·factor                                  |factor                                          |S29   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S26  |stmt -> if bool ·then stmt                       |then                                            |S37   |
+|     |stmt -> if bool ·then stmt else stmt             |then                                            |S37   |
+-----------------------------------------------------------------------------------------------------------------
+|S27  |bool -> expr ·< expr                             |<                                               |S38   |
+|     |expr -> expr ·+ term                             |+                                               |S39   |
+|     |expr -> expr ·- term                             |-                                               |S40   |
+-----------------------------------------------------------------------------------------------------------------
+|S28  |expr -> term·                                    |#expr -> term                                   |S56   |
+|     |term -> term ·* factor                           |*                                               |S41   |
+|     |term -> term ·/ factor                           |/                                               |S42   |
+-----------------------------------------------------------------------------------------------------------------
+|S29  |term -> factor·                                  |#term -> factor                                 |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S30  |factor -> id·                                    |#factor -> id                                   |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S31  |factor -> num·                                   |#factor -> num                                  |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S32  |stmt -> while bool ·do stmt                      |do                                              |S43   |
+-----------------------------------------------------------------------------------------------------------------
+|S33  |stmt -> repeat stmts ·until bool                 |until                                           |S44   |
+|     |stmts -> stmts ·; stmt                           |;                                               |S24   |
+-----------------------------------------------------------------------------------------------------------------
+|S34  |S -> program ( id_lists ) ; compound_stmt ·.     |.                                               |S45   |
+-----------------------------------------------------------------------------------------------------------------
+|S35  |stmts -> stmts ; stmt·                           |#stmts -> stmts ; stmt                          |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S36  |stmt -> id := expr·                              |#stmt -> id := expr                             |S56   |
+|     |expr -> expr ·+ term                             |+                                               |S39   |
+|     |expr -> expr ·- term                             |-                                               |S40   |
+-----------------------------------------------------------------------------------------------------------------
+|S37  |stmt -> if bool then ·stmt                       |stmt                                            |S46   |
+|     |stmt -> if bool then ·stmt else stmt             |stmt                                            |S46   |
+|     |stmt -> ·id := expr                              |id                                              |S16   |
+|     |stmt -> ·compound_stmt                           |compound_stmt                                   |S17   |
+|     |stmt -> ·if bool then stmt                       |if                                              |S18   |
+|     |stmt -> ·if bool then stmt else stmt             |if                                              |S18   |
+|     |stmt -> ·while bool do stmt                      |while                                           |S19   |
+|     |stmt -> ·repeat stmts until bool                 |repeat                                          |S20   |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S38  |bool -> expr < ·expr                             |expr                                            |S47   |
+|     |expr -> ·expr + term                             |expr                                            |S47   |
+|     |expr -> ·expr - term                             |expr                                            |S47   |
+|     |expr -> ·term                                    |term                                            |S28   |
+|     |term -> ·term * factor                           |term                                            |S28   |
+|     |term -> ·term / factor                           |term                                            |S28   |
+|     |term -> ·factor                                  |factor                                          |S29   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S39  |expr -> expr + ·term                             |term                                            |S48   |
+|     |term -> ·term * factor                           |term                                            |S48   |
+|     |term -> ·term / factor                           |term                                            |S48   |
+|     |term -> ·factor                                  |factor                                          |S29   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S40  |expr -> expr - ·term                             |term                                            |S49   |
+|     |term -> ·term * factor                           |term                                            |S49   |
+|     |term -> ·term / factor                           |term                                            |S49   |
+|     |term -> ·factor                                  |factor                                          |S29   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S41  |term -> term * ·factor                           |factor                                          |S50   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S42  |term -> term / ·factor                           |factor                                          |S51   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S43  |stmt -> while bool do ·stmt                      |stmt                                            |S52   |
+|     |stmt -> ·id := expr                              |id                                              |S16   |
+|     |stmt -> ·compound_stmt                           |compound_stmt                                   |S17   |
+|     |stmt -> ·if bool then stmt                       |if                                              |S18   |
+|     |stmt -> ·if bool then stmt else stmt             |if                                              |S18   |
+|     |stmt -> ·while bool do stmt                      |while                                           |S19   |
+|     |stmt -> ·repeat stmts until bool                 |repeat                                          |S20   |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S44  |stmt -> repeat stmts until ·bool                 |bool                                            |S53   |
+|     |bool -> ·expr < expr                             |expr                                            |S27   |
+|     |expr -> ·expr + term                             |expr                                            |S27   |
+|     |expr -> ·expr - term                             |expr                                            |S27   |
+|     |expr -> ·term                                    |term                                            |S28   |
+|     |term -> ·term * factor                           |term                                            |S28   |
+|     |term -> ·term / factor                           |term                                            |S28   |
+|     |term -> ·factor                                  |factor                                          |S29   |
+|     |factor -> ·id                                    |id                                              |S30   |
+|     |factor -> ·num                                   |num                                             |S31   |
+-----------------------------------------------------------------------------------------------------------------
+|S45  |S -> program ( id_lists ) ; compound_stmt .·     |#S -> program ( id_lists ) ; compound_stmt .    |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S46  |stmt -> if bool then stmt·                       |#stmt -> if bool then stmt                      |S56   |
+|     |stmt -> if bool then stmt ·else stmt             |else                                            |S54   |
+-----------------------------------------------------------------------------------------------------------------
+|S47  |bool -> expr < expr·                             |#bool -> expr < expr                            |S56   |
+|     |expr -> expr ·+ term                             |+                                               |S39   |
+|     |expr -> expr ·- term                             |-                                               |S40   |
+-----------------------------------------------------------------------------------------------------------------
+|S48  |expr -> expr + term·                             |#expr -> expr + term                            |S56   |
+|     |term -> term ·* factor                           |*                                               |S41   |
+|     |term -> term ·/ factor                           |/                                               |S42   |
+-----------------------------------------------------------------------------------------------------------------
+|S49  |expr -> expr - term·                             |#expr -> expr - term                            |S56   |
+|     |term -> term ·* factor                           |*                                               |S41   |
+|     |term -> term ·/ factor                           |/                                               |S42   |
+-----------------------------------------------------------------------------------------------------------------
+|S50  |term -> term * factor·                           |#term -> term * factor                          |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S51  |term -> term / factor·                           |#term -> term / factor                          |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S52  |stmt -> while bool do stmt·                      |#stmt -> while bool do stmt                     |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S53  |stmt -> repeat stmts until bool·                 |#stmt -> repeat stmts until bool                |S56   |
+-----------------------------------------------------------------------------------------------------------------
+|S54  |stmt -> if bool then stmt else ·stmt             |stmt                                            |S55   |
+|     |stmt -> ·id := expr                              |id                                              |S16   |
+|     |stmt -> ·compound_stmt                           |compound_stmt                                   |S17   |
+|     |stmt -> ·if bool then stmt                       |if                                              |S18   |
+|     |stmt -> ·if bool then stmt else stmt             |if                                              |S18   |
+|     |stmt -> ·while bool do stmt                      |while                                           |S19   |
+|     |stmt -> ·repeat stmts until bool                 |repeat                                          |S20   |
+|     |compound_stmt -> ·begin optional_stmts end       |begin                                           |S9    |
+-----------------------------------------------------------------------------------------------------------------
+|S55  |stmt -> if bool then stmt else stmt·             |#stmt -> if bool then stmt else stmt            |S56   |
+-----------------------------------------------------------------------------------------------------------------

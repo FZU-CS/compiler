@@ -1,0 +1,12 @@
+0: x = 19 
+1: if x < y goto 3 
+2: goto 5 
+3: y = x 
+4: goto 11 
+5: t1 = y - 1 
+6: y = t1 
+7: if y < x goto 9 
+8: goto 5 
+9: t2 = z * 7 
+10: z = t2 
+11:

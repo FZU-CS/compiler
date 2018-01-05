@@ -1,0 +1,25 @@
+S' S
+S program id ; compound_stmt .
+S program ( id_lists ) ; compound_stmt .
+id_lists id 
+id_lists id_lists , id 
+compound_stmt begin optional_stmts end
+optional_stmts stmts
+optional_stmts ε
+stmts stmt
+stmts stmts ; stmt 
+stmt id := expr
+stmt compound_stmt
+stmt if bool then stmt
+stmt if bool then stmt else stmt
+stmt while bool  do stmt
+stmt repeat stmts until bool
+bool expr < expr 
+expr expr + term
+expr expr - term
+expr term
+term term * factor
+term term / factor
+term factor
+factor id
+factor num

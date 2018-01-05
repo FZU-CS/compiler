@@ -1,0 +1,551 @@
+(1)
+stateStack: 0 
+symbolStack: 
+INPUT: program ( id , id ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(2)
+stateStack: 0 2 
+symbolStack: program 
+INPUT: ( id , id ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(3)
+stateStack: 0 2 4 
+symbolStack: program ( 
+INPUT: id , id ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(4)
+stateStack: 0 2 4 7 
+symbolStack: program ( id 
+INPUT: , id ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据id_lists-> id规约
+
+(5)
+stateStack: 0 2 4 6 
+symbolStack: program ( id_lists 
+INPUT: , id ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(6)
+stateStack: 0 2 4 6 11 
+symbolStack: program ( id_lists , 
+INPUT: id ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(7)
+stateStack: 0 2 4 6 11 22 
+symbolStack: program ( id_lists , id 
+INPUT: ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据id_lists-> id_lists , id规约
+
+(8)
+stateStack: 0 2 4 6 
+symbolStack: program ( id_lists 
+INPUT: ) ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(9)
+stateStack: 0 2 4 6 10 
+symbolStack: program ( id_lists ) 
+INPUT: ; begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(10)
+stateStack: 0 2 4 6 10 21 
+symbolStack: program ( id_lists ) ; 
+INPUT: begin id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(11)
+stateStack: 0 2 4 6 10 21 9 
+symbolStack: program ( id_lists ) ; begin 
+INPUT: id := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(12)
+stateStack: 0 2 4 6 10 21 9 16 
+symbolStack: program ( id_lists ) ; begin id 
+INPUT: := num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(13)
+stateStack: 0 2 4 6 10 21 9 16 25 
+symbolStack: program ( id_lists ) ; begin id := 
+INPUT: num ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(14)
+stateStack: 0 2 4 6 10 21 9 16 25 31 
+symbolStack: program ( id_lists ) ; begin id := num 
+INPUT: ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据factor-> num规约
+
+(15)
+stateStack: 0 2 4 6 10 21 9 16 25 29 
+symbolStack: program ( id_lists ) ; begin id := factor 
+INPUT: ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据term-> factor规约
+
+(16)
+stateStack: 0 2 4 6 10 21 9 16 25 28 
+symbolStack: program ( id_lists ) ; begin id := term 
+INPUT: ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据expr-> term规约
+
+(17)
+stateStack: 0 2 4 6 10 21 9 16 25 36 
+symbolStack: program ( id_lists ) ; begin id := expr 
+INPUT: ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据stmt-> id := expr规约
+
+(18)
+stateStack: 0 2 4 6 10 21 9 15 
+symbolStack: program ( id_lists ) ; begin stmt 
+INPUT: ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据stmts-> stmt规约
+
+(19)
+stateStack: 0 2 4 6 10 21 9 14 
+symbolStack: program ( id_lists ) ; begin stmts 
+INPUT: ; if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(20)
+stateStack: 0 2 4 6 10 21 9 14 24 
+symbolStack: program ( id_lists ) ; begin stmts ; 
+INPUT: if id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(21)
+stateStack: 0 2 4 6 10 21 9 14 24 18 
+symbolStack: program ( id_lists ) ; begin stmts ; if 
+INPUT: id < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(22)
+stateStack: 0 2 4 6 10 21 9 14 24 18 30 
+symbolStack: program ( id_lists ) ; begin stmts ; if id 
+INPUT: < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据factor-> id规约
+
+(23)
+stateStack: 0 2 4 6 10 21 9 14 24 18 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if factor 
+INPUT: < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据term-> factor规约
+
+(24)
+stateStack: 0 2 4 6 10 21 9 14 24 18 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if term 
+INPUT: < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据expr-> term规约
+
+(25)
+stateStack: 0 2 4 6 10 21 9 14 24 18 27 
+symbolStack: program ( id_lists ) ; begin stmts ; if expr 
+INPUT: < id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(26)
+stateStack: 0 2 4 6 10 21 9 14 24 18 27 38 
+symbolStack: program ( id_lists ) ; begin stmts ; if expr < 
+INPUT: id then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(27)
+stateStack: 0 2 4 6 10 21 9 14 24 18 27 38 30 
+symbolStack: program ( id_lists ) ; begin stmts ; if expr < id 
+INPUT: then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据factor-> id规约
+
+(28)
+stateStack: 0 2 4 6 10 21 9 14 24 18 27 38 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if expr < factor 
+INPUT: then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据term-> factor规约
+
+(29)
+stateStack: 0 2 4 6 10 21 9 14 24 18 27 38 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if expr < term 
+INPUT: then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据expr-> term规约
+
+(30)
+stateStack: 0 2 4 6 10 21 9 14 24 18 27 38 47 
+symbolStack: program ( id_lists ) ; begin stmts ; if expr < expr 
+INPUT: then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据bool-> expr < expr规约
+
+(31)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool 
+INPUT: then id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(32)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then 
+INPUT: id := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(33)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 16 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then id 
+INPUT: := id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(34)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 16 25 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then id := 
+INPUT: id else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(35)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 16 25 30 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then id := id 
+INPUT: else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据factor-> id规约
+
+(36)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 16 25 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then id := factor 
+INPUT: else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据term-> factor规约
+
+(37)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 16 25 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then id := term 
+INPUT: else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据expr-> term规约
+
+(38)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 16 25 36 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then id := expr 
+INPUT: else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+根据stmt-> id := expr规约
+
+(39)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt 
+INPUT: else begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(40)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else 
+INPUT: begin repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(41)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin 
+INPUT: repeat id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(42)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat 
+INPUT: id := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(43)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id 
+INPUT: := id - num until id < id ; id := id * num end end . $ 
+移入
+
+(44)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := 
+INPUT: id - num until id < id ; id := id * num end end . $ 
+移入
+
+(45)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 30 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := id 
+INPUT: - num until id < id ; id := id * num end end . $ 
+根据factor-> id规约
+
+(46)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := factor 
+INPUT: - num until id < id ; id := id * num end end . $ 
+根据term-> factor规约
+
+(47)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := term 
+INPUT: - num until id < id ; id := id * num end end . $ 
+根据expr-> term规约
+
+(48)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 36 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := expr 
+INPUT: - num until id < id ; id := id * num end end . $ 
+移入
+
+(49)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 36 40 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := expr - 
+INPUT: num until id < id ; id := id * num end end . $ 
+移入
+
+(50)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 36 40 31 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := expr - num 
+INPUT: until id < id ; id := id * num end end . $ 
+根据factor-> num规约
+
+(51)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 36 40 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := expr - factor 
+INPUT: until id < id ; id := id * num end end . $ 
+根据term-> factor规约
+
+(52)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 36 40 49 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := expr - term 
+INPUT: until id < id ; id := id * num end end . $ 
+根据expr-> expr - term规约
+
+(53)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 16 25 36 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat id := expr 
+INPUT: until id < id ; id := id * num end end . $ 
+根据stmt-> id := expr规约
+
+(54)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 15 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmt 
+INPUT: until id < id ; id := id * num end end . $ 
+根据stmts-> stmt规约
+
+(55)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts 
+INPUT: until id < id ; id := id * num end end . $ 
+移入
+
+(56)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until 
+INPUT: id < id ; id := id * num end end . $ 
+移入
+
+(57)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 30 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until id 
+INPUT: < id ; id := id * num end end . $ 
+根据factor-> id规约
+
+(58)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until factor 
+INPUT: < id ; id := id * num end end . $ 
+根据term-> factor规约
+
+(59)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until term 
+INPUT: < id ; id := id * num end end . $ 
+根据expr-> term规约
+
+(60)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 27 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until expr 
+INPUT: < id ; id := id * num end end . $ 
+移入
+
+(61)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 27 38 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until expr < 
+INPUT: id ; id := id * num end end . $ 
+移入
+
+(62)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 27 38 30 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until expr < id 
+INPUT: ; id := id * num end end . $ 
+根据factor-> id规约
+
+(63)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 27 38 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until expr < factor 
+INPUT: ; id := id * num end end . $ 
+根据term-> factor规约
+
+(64)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 27 38 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until expr < term 
+INPUT: ; id := id * num end end . $ 
+根据expr-> term规约
+
+(65)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 27 38 47 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until expr < expr 
+INPUT: ; id := id * num end end . $ 
+根据bool-> expr < expr规约
+
+(66)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 20 33 44 53 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin repeat stmts until bool 
+INPUT: ; id := id * num end end . $ 
+根据stmt-> repeat stmts until bool规约
+
+(67)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 15 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmt 
+INPUT: ; id := id * num end end . $ 
+根据stmts-> stmt规约
+
+(68)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts 
+INPUT: ; id := id * num end end . $ 
+移入
+
+(69)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; 
+INPUT: id := id * num end end . $ 
+移入
+
+(70)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id 
+INPUT: := id * num end end . $ 
+移入
+
+(71)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := 
+INPUT: id * num end end . $ 
+移入
+
+(72)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 30 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := id 
+INPUT: * num end end . $ 
+根据factor-> id规约
+
+(73)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 29 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := factor 
+INPUT: * num end end . $ 
+根据term-> factor规约
+
+(74)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := term 
+INPUT: * num end end . $ 
+移入
+
+(75)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 28 41 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := term * 
+INPUT: num end end . $ 
+移入
+
+(76)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 28 41 31 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := term * num 
+INPUT: end end . $ 
+根据factor-> num规约
+
+(77)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 28 41 50 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := term * factor 
+INPUT: end end . $ 
+根据term-> term * factor规约
+
+(78)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 28 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := term 
+INPUT: end end . $ 
+根据expr-> term规约
+
+(79)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 16 25 36 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; id := expr 
+INPUT: end end . $ 
+根据stmt-> id := expr规约
+
+(80)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 24 35 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts ; stmt 
+INPUT: end end . $ 
+根据stmts-> stmts ; stmt规约
+
+(81)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 14 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin stmts 
+INPUT: end end . $ 
+根据optional_stmts-> stmts规约
+
+(82)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 13 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin optional_stmts 
+INPUT: end end . $ 
+移入
+
+(83)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 9 13 23 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else begin optional_stmts end 
+INPUT: end . $ 
+根据compound_stmt-> begin optional_stmts end规约
+
+(84)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 17 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else compound_stmt 
+INPUT: end . $ 
+根据stmt-> compound_stmt规约
+
+(85)
+stateStack: 0 2 4 6 10 21 9 14 24 18 26 37 46 54 55 
+symbolStack: program ( id_lists ) ; begin stmts ; if bool then stmt else stmt 
+INPUT: end . $ 
+根据stmt-> if bool then stmt else stmt规约
+
+(86)
+stateStack: 0 2 4 6 10 21 9 14 24 35 
+symbolStack: program ( id_lists ) ; begin stmts ; stmt 
+INPUT: end . $ 
+根据stmts-> stmts ; stmt规约
+
+(87)
+stateStack: 0 2 4 6 10 21 9 14 
+symbolStack: program ( id_lists ) ; begin stmts 
+INPUT: end . $ 
+根据optional_stmts-> stmts规约
+
+(88)
+stateStack: 0 2 4 6 10 21 9 13 
+symbolStack: program ( id_lists ) ; begin optional_stmts 
+INPUT: end . $ 
+移入
+
+(89)
+stateStack: 0 2 4 6 10 21 9 13 23 
+symbolStack: program ( id_lists ) ; begin optional_stmts end 
+INPUT: . $ 
+根据compound_stmt-> begin optional_stmts end规约
+
+(90)
+stateStack: 0 2 4 6 10 21 34 
+symbolStack: program ( id_lists ) ; compound_stmt 
+INPUT: . $ 
+移入
+
+(91)
+stateStack: 0 2 4 6 10 21 34 45 
+symbolStack: program ( id_lists ) ; compound_stmt . 
+INPUT: $ 
+根据S-> program ( id_lists ) ; compound_stmt .规约
+
+(92)
+stateStack: 0 1 
+symbolStack: S 
+INPUT: $ 
+accept
