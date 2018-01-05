@@ -1,0 +1,16 @@
+id a
+id b
+id x
+num 19
+id x
+id y
+id y
+id x
+id y
+id x
+id y
+id y
+num 1
+id z
+id z
+num 7
