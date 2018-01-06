@@ -1,17 +1,24 @@
 ROADMAP
 
-
-Running Lexer: ./run_lexer.py path/to/pascal/program
+(1)Running Lexer: ./run_lexer.py path/to/pascal/program
 
 eg. ./run_lexer.py lexer_tests/helloworld.pas
 
 
-Running SLR(1)-based Parser: ./run_parser_demo.sh
+(2)Running SLR(1)-based Parser: ./run_parser_demo.sh
 
-This command would first generate a folder named build. And then
-the procedure would feed the executable file "parser" with the 
+This command would first generate a folder named build_parser. And
+then the procedure would feed the executable file "parser" with the 
 input tocken file, i.e.parser_tests/standard_input.txt in our demo.
 
-We have not combined the C++ parser and Python lexer yet. Welcome to
-submit a PR to implement it.
+(3)Running IR generator: ./run_ir_demo.sh input|case1|case2|case3
 
+eg. ./run_ir_demo.sh input
+
+This command would first generate a folder named build_ir. And then
+the procedure would feed the executable file "ir" with input tocken 
+file and signal file, i.e.ir_tests/input/input.txt and 
+ir_tests/input/top.txt in our demo.
+
+We have not combined the C++ parser/IR generator and Python lexer yet. 
+Welcome to submit a PR which implements it.
