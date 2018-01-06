@@ -15,10 +15,19 @@ Grammatical Analysis:
   * Print the processing messages during analysing statements, including the 
     contents of stack and applied actions.
   * Append: 
-    * Grammar of "Grammatical Analysis": grammar/grammar.txt
+    * Grammar of "Grammatical Analysis": grammar/parser_tasks/grammar.txt
     * Test data: slr1_tests/given_example.pas
 
-IR Generating: TBD
+IR Generating: 
+  * Based on the subset of "grammar.txt", create the SLR(1) analyse table;
+  * Output the error to assigned log file;
+  * Print the processing messages during analysing statements, including the 
+    contents of stack and applied actions;
+  * Write the SDD of given grammar;
+  * Generate the corresponding TAC(Three Address Code) based on SDD.
+  * Append: 
+    * Grammar of "IR Generating": grammar/ir_tasks/grammar.txt
+    * Test data: ir_tests/example.pas
 
 For running our demonstration: See ROADMAP for details.
 
