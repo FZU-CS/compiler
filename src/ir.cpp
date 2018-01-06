@@ -761,16 +761,15 @@ void print(char file[]) {
 
 	fclose(stdout);
 }
-
 int main() {
-	char gramarFile[] = "grammar.txt";
-	char outputFile[] = "output.txt";
-	char actionAndGotoFile[] = "action_and_goto.txt";
-	char DFAFile[] = "slr.txt";
-	char errorFile[] = "error.txt";
-	char inputFile[] = "input.txt";
-	char topFile[] = "top.txt";
-	char codeFile[] = "ir_code.txt";
+    char gramarFile[] = "grammar.txt";
+    char outputFile[] = "output.txt";
+    char actionAndGotoFile[] = "actionAndGoto.txt";
+    char DFAFile[] = "slr.txt";
+    char errorFile[] = "error.txt";
+    char inputFile[] = "input.txt";
+    char topFile[] = "top.txt";
+    char codeFile[] = "ir_code.txt";
 
 
 	init();
